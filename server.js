@@ -13,30 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-
-
 //Routes===============================
-
-
-
-
-//makes api calls
-
-// const notes = []
-
-// app.get("/api/notes", (req, res) => {
-//   console.log(notes);
-//   return res.json(notes);
-// });
-
-// app.post("/api/notes", (req, res) => {
-//   const newNote = req.body;
-//   //console.log(newNote);
-//   notes.push(newNote);
-//   res.json(notes);
-// });
-
-
 
 //READ files in db.json ===========================================
 
@@ -46,7 +23,7 @@ app.get("/api/notes", (req, res) => {
       return console.log("Error: "+err);
     }
     //console.log("data: "+data);
-    res.send(db);
+    res.json(JSON.parse(data));
   })
 });
 
@@ -113,19 +90,15 @@ app.delete("/api/notes/:id", (req, res) =>{
   })
 });
 
-
 //gets html files===============================
 
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
-
-
-
 
   //Start Server ===============================
   app.listen(PORT, function() {
